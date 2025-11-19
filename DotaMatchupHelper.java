@@ -116,35 +116,45 @@ public class DotaMatchupHelper {
 
     }
     
-    private void start() {
-        Scanner scanner = new Scanner(System.in);
-        String input;
-        
-        System.out.println("\n==============================================");
-        System.out.println("          DOTA HERO MATCHUP HELPER            ");
-        System.out.println("==============================================");
-        
-        counterSystem.showAvailableHeroes();
+ private void start() {
+    Scanner scanner = new Scanner(System.in);
+    String input;
 
-        do {
-            System.out.println("\nEnter enemy hero name (or type 'EXIT'):");
-            System.out.print(">");
-            
-            input = scanner.nextLine().trim();
-            
-            if (input.equalsIgnoreCase("EXIT")) {
-                break;
-            }
-            
-            if (!input.isEmpty()) {
-                counterSystem.suggestCounters(input);
-            }
-            
-        } while (true);
+    System.out.println("\n==============================================");
+    System.out.println("          DOTA HERO MATCHUP HELPER            ");
+    System.out.println("==============================================");
 
-        System.out.println("\nQuitting program. Goodbye!");
-        scanner.close();
-    }
+    counterSystem.showAvailableHeroes();
+
+    do {
+        System.out.println("\nEnter hero number to counter (or type '0' to EXIT):");
+        System.out.print("> ");
+
+        input = scanner.nextLine().trim();
+
+        if (input.equals("0")) {
+            break;
+        }
+
+        try {
+            int heroNumber = Integer.parseInt(input);
+            Hero selectedHero = counterSystem.getHeroByIndex(heroNumber);
+
+            if (selectedHero == null) {
+                System.out.println("[ERROR] Invalid hero number. Try again.");
+            } else {
+                counterSystem.suggestCounters(selectedHero.getName());
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("[ERROR] Please enter a valid number.");
+        }
+
+    } while (true);
+
+    System.out.println("\nQuitting program. Goodbye!");
+    scanner.close();
+}
+
 
     public static void main(String[] args) {
         DotaMatchupHelper app = new DotaMatchupHelper();

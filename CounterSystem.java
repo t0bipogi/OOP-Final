@@ -23,14 +23,26 @@ public class CounterSystem {
         return null; // Not found
     }
 
-    public void showAvailableHeroes() {
-        System.out.println("\n--- Available Meta Hero Pool (" + heroes.size() + " Heroes) ---");
-        
-        for (Hero hero : this.heroes) {
-            System.out.println(" - " + hero.getName() + " [" + hero.getRole() + "]");
-        }
-        System.out.println("----------------------------------------------");
+   public void showAvailableHeroes() {
+    System.out.println("\n--- Available Meta Hero Pool (" + heroes.size() + " Heroes) ---");
+    
+    int index = 1;
+    for (Hero hero : this.heroes) {
+        System.out.println(" " + index + "- " + hero.getName() + " [" + hero.getRole() + "]");
+        index++;
     }
+
+
+    
+    System.out.println("----------------------------------------------");
+}
+
+public Hero getHeroByIndex(int index) {
+    if (index < 1 || index > heroes.size()) {
+        return null;
+    }
+    return heroes.get(index - 1);
+}
 
     public void suggestCounters(String name) {
         Hero targetHero = findHero(name);
